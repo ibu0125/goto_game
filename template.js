@@ -1,8 +1,9 @@
 var canvas, g;
-var chara_x,chara_y,chara_img;
+var chara_x,chara_y,chara_img,chara_r;
 var speed=0,acceleration=0;
-var enemy_x,enemy_y,enemy_img,enemy_speed;
+var enemy_x,enemy_y,enemy_img,enemy_speed,enemy_r;
 var enemy_jugde=0;
+var score;
 
 onload = function () {
   // 描画コンテキストの取得
@@ -27,6 +28,8 @@ function init() {
   enemy_img=new Image();
   enemy_img.src="./goto_enemy.png";
   enemy_speed=5;
+
+  score=0;
 }
 
 function keydown(e) {
@@ -52,6 +55,7 @@ function update() {
 
   enemy_x-=enemy_speed;
   if(enemy_x<-100){
+    score+=100;
     enemy_x=1200;
     enemy_y=Math.floor(Math.random()*451);
   }
@@ -80,4 +84,10 @@ function draw() {
     enemy_x-enemy_img.width/2,
     enemy_y-enemy_img.height/2
   );
+
+  g.fillStyle="rgb(255,255,255)";
+  g.font="16pt Arial";
+  var scoreLabel = "SCORE :"+score;
+  var scoreLabelWidth = g.measureText(scoreLabel).width;
+  g.fillText(scoreLabel,1180-scoreLabelWidth,40);
 }
